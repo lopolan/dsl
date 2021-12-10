@@ -1,0 +1,12 @@
+package ${basePackage}.service;
+
+import ${basePackage}.service.domain.${entity.className};
+import ${basePackage}.api.dto.${entity.className}DTO;
+import com.baomidou.mybatisplus.extension.service.IService;
+
+public interface ${entity.className}Service extends IService<${entity.className}>{
+    ${entity.className}DTO save(${entity.className}DTO dto);
+    ${entity.className}DTO partialUpdate(${entity.className}DTO dto);
+    ${entity.className}DTO findOne(String key);
+    void delete(String key);
+}

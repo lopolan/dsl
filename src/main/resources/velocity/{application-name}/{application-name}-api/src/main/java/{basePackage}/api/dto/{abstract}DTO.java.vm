@@ -1,0 +1,21 @@
+package ${basePackage}.api.dto;
+#foreach($name in $abstract.allFieldFullNames)
+import $name;
+#end
+
+public #if($abstract.annotationNams.contains("Abstract")) abstract #end class ${abstract.className}DTO {
+#foreach($field in $abstract.fields)
+    private $field.typeName $field.name;
+#end
+
+#foreach($field in $abstract.fields)
+
+    public  ${abstract.className}DTO set${field.className}(${field.typeName} ${field.name}) {
+        this.${field.name}=${field.name};
+    }
+    public  ${field.typeName} get${field.className}() {
+        return this.${field.name};
+    }
+#end
+
+}

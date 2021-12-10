@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=${basePackage}.starter.config.TestControllerConfiguration,\
+  ${basePackage}.starter.config.Swagger2Configuration

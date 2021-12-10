@@ -1,0 +1,16 @@
+package ${basePackage}.feign;
+
+import cn.yematech.user.api.UserService;
+import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+/**
+ * @author se7en
+ * @date $date
+ **/
+@Configuration
+@EnableFeignClients(basePackages = "${basePackage}.feign")
+public class FeignClientConfiguration {
+
+}

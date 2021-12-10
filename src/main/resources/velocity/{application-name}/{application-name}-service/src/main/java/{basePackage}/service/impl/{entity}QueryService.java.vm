@@ -1,0 +1,89 @@
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import java.util.List;
+import java.util.Optional;
+import java.util.Collections;
+import java.util.stream.Collectors;
+
+import ${basePackage}.service.domain.${entity.className};
+import ${basePackage}.service.common.BaseQueryService;
+import ${basePackage}.api.dto.${entity.className}DTO;
+import ${basePackage}.service.mapstruct.${entity.className}Mapping;
+import ${basePackage}.service.repository.${entity.className}Mapper;
+
+@Service
+@Transactional(readOnly = true)
+public class ${entity.className}QueryService extends BaseQueryService {
+
+  private final Logger log = LoggerFactory.getLogger(${entity.className}QueryService.class);
+
+  private ${entity.className}Mapper ${entity.name}Mapper;
+  private ${entity.className}Mapping ${entity.name}Mapping;
+
+  @Service
+  @Transactional(readOnly = true)
+  public long countByCriteria(${entity.className}Criteria criteria) {
+    log.debug("count by criteria : {}", criteria);
+    return createSpecification(criteria).count();
+  }
+
+  @Transactional(readOnly = true)
+  public List<${entity.className}DTO> findByCriteria(${entity.className}Criteria criteria) {
+    log.debug("find by criteria : {}", criteria);
+    return ${entity.name}Mapper.toDtos(createSpecification(criteria).list());
+  }
+
+  @Transactional(readOnly = true)
+  public Page<${entity.className}DTO> findByCriteria(${entity.className}Criteria criteria,
+      IPage page) {
+    log.debug("find by criteria : {}, page: {}", criteria, page);
+    IPage<${entity.className}> result = createSpecification(criteria).page(page);
+    List<${entity.className}DTO> records = Optional.ofNullable(result.getRecords())
+        .map(
+            entities -> entities.stream().map( < %= entityToDtoReference % >
+        ).collect(Collectors.toList())).orElse(Collections.emptyList());
+    return new Page<${entity.className}DTO>(page.getCurrent(), page.getSize(), result.getTotal())
+        .setRecords(records);
+  }
+
+  protected LambdaQueryChainWrapper<${entity.className}> createSpecification(${entity.className}Criteria criteria) {
+    LambdaQueryChainWrapper<${entity.className}> specification = fetchWapper();
+    if (criteria != null) {
+      if (criteria.getId() != null) {
+        specification = specification.and(buildRangeSpecification(criteria.getId(), ${entity.className}::getId,specification));
+      }
+      if (criteria.getCreatedDate() != null) {
+        specification = specification.and(buildRangeSpecification(criteria.getCreatedDate(), ${entity.className}::getCreatedDate,specification));
+      }
+      if (criteria.getLastModifiedDate() != null) {
+        specification = specification.and(buildRangeSpecification(criteria.getLastModifiedDate(), ${entity.className}::getLastModifiedDate,specification));
+      }
+      if (criteria.getCreatedBy() != null) {
+        specification = specification.and(buildStringSpecification(criteria.getCreatedBy(), ${entity.className}::getCreatedBy,specification));
+      }
+      if (criteria.getLastModifiedBy() != null) {
+        specification = specification.and(buildStringSpecification(criteria.getLastModifiedBy(), ${entity.className}::getLastModifiedBy,specification));
+      }
+      if (criteria.getCreatedById() != null) {
+        specification = specification.and(buildStringSpecification(criteria.getCreatedById(), ${entity.className}::getCreatedById,specification));
+      }
+      if (criteria.getLastModifiedById() != null) {
+        specification = specification.and(buildStringSpecification(criteria.getLastModifiedById(), ${entity.className}::getLastModifiedById,specification));
+      }
+#foreach($field in $entity.allEffectiveField)
+#if($field.fieldTypeEnums)
+      if(criteria.get${field.className}() != null){
+        specification = ${field.fieldTypeEnums.buildContent}(criteria.get${field.className}(),${entity.className}::get${field.className},specification)
+      }
+#end
+#end
+    }
+    return specification;
+  }
+}

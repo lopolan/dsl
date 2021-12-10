@@ -1,0 +1,22 @@
+package ${basePackage}.service.domain;
+#foreach($name in $abstract.allFieldFullNames)
+import $name;
+#end
+
+public #if($abstract.annotationNams.contains("Abstract")) abstract #end class ${abstract.className}{
+#foreach($field in $abstract.fields)
+    private $field.typeName $field.name;
+#end
+
+#foreach($field in $abstract.fields)
+
+    public  ${abstract.className} set${field.className}(${field.typeName} ${field.name}) {
+        this.${field.name}=${field.name};
+        return this;
+    }
+    public  ${field.typeName} get${field.className}() {
+        return this.${field.name};
+    }
+#end
+
+}

@@ -1,0 +1,42 @@
+package ${basePackage}.feign;
+
+import cn.yematech.user.api.*;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.cloud.openfeign.FallbackFactory;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.lang.Nullable;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
+
+/**
+ * <h1> $entity.fullClassName</h1>
+ *
+ * <pre>
+ *
+ * </pre>
+ *
+ * @author lopo
+ * @date $date
+ **/
+@FeignClient(name = "${${basePackage}.name:${project.projectName}", url = "${${basePackage}.url:http://127.0.0.1:8080}", path = "${${basePackage}.path:/}")
+public interface ${entity.className}Feign {
+
+        @PostMapping("/${entity.pathName}")
+        ${entity.className}DTO create(@RequestBody ${entity.className}DTO dto);
+
+        @PutMapping("${entity.pathName}")
+        ${entity.className}DTO update(@RequestBody ${entity.className}DTO dto);
+
+        @DeleteMapping("/${entity.pathName}/{id}")
+        Boolean remove(@PathVariable("id") String id);
+
+        @GetMapping("/${entity.pathName}/{id}")
+        ${entity.className}DTO get(@PathVariable("id") String id);
+
+        @GetMapping("/${entity.pathName}/page")
+        StandardPageView<${entity.className}DTO> get(${entity.className}Criteria criteria,
+        Pageable pageable);
+}

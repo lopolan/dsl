@@ -1,0 +1,127 @@
+package ${basePackage}.config;
+
+import javax.servlet.http.HttpServletRequest;
+
+public class CurrentUserHelper {
+
+  private static final ThreadLocal<UserInfo> THREAD_LOCAL = new ThreadLocal<>();
+
+  public CurrentUserHelper() {
+  }
+
+  public static UserInfo currentUser() {
+    return THREAD_LOCAL.get();
+  }
+
+  public static String currentUserId() {
+    return THREAD_LOCAL.get().getUserId();
+  }
+
+  public static void clean() {
+    THREAD_LOCAL.remove();
+  }
+
+  public static void saveUser(UserInfo userInfo) {
+    THREAD_LOCAL.set(userInfo);
+  }
+
+  public static void saveUser(String userId, String userName, String realName,
+      String tenantId, String tenantName, String userRole) {
+    THREAD_LOCAL.set(new UserInfo(userId, userName, realName, tenantId, tenantName, userRole));
+  }
+
+  public static void saveUser(HttpServletRequest request) {
+//        var userId = request.getHeader("userid");
+//        var userName = request.getHeader("username");
+//        var realName = request.getHeader("realname");
+//        var tenantId = request.getHeader("tenancyid");
+//        var tenantName = request.getHeader("tenancyname");
+//        var userRole = request.getHeader("userrole");
+//        CurrentUserHelper.saveUser(userId, userName, realName, tenantId, tenantName, userRole);
+
+    CurrentUserHelper.saveUser("1", "admin", "admin", "1", "admin", "admin");
+  }
+
+  public static class UserInfo {
+
+    private String userId;
+    private String userName;
+    private String realName;
+    private String tenantId;
+    private String tenantName;
+    private String userRole;
+
+    public UserInfo() {
+    }
+
+    public UserInfo(String userId, String userName, String realName, String tenantId,
+        String tenantName, String userRole) {
+      this.userId = userId;
+      this.userName = userName;
+      this.realName = realName;
+      this.tenantId = tenantId;
+      this.tenantName = tenantName;
+      this.userRole = userRole;
+    }
+
+    public String getUserId() {
+      return userId;
+    }
+
+    public void setUserId(String userId) {
+      this.userId = userId;
+    }
+
+    public String getUserName() {
+      return userName;
+    }
+
+    public void setUserName(String userName) {
+      this.userName = userName;
+    }
+
+    public String getRealName() {
+      return realName;
+    }
+
+    public void setRealName(String realName) {
+      this.realName = realName;
+    }
+
+    public String getTenantId() {
+      return tenantId;
+    }
+
+    public void setTenantId(String tenantId) {
+      this.tenantId = tenantId;
+    }
+
+    public String getTenantName() {
+      return tenantName;
+    }
+
+    public void setTenantName(String tenantName) {
+      this.tenantName = tenantName;
+    }
+
+    public String getUserRole() {
+      return userRole;
+    }
+
+    public void setUserRole(String userRole) {
+      this.userRole = userRole;
+    }
+
+    @Override
+    public String toString() {
+      return "UserInfo{" +
+          "userId='" + userId + '\'' +
+          ", userName='" + userName + '\'' +
+          ", realName='" + realName + '\'' +
+          ", tenantId='" + tenantId + '\'' +
+          ", tenantName='" + tenantName + '\'' +
+          ", userRole='" + userRole + '\'' +
+          '}';
+    }
+  }
+}

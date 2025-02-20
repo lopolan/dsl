@@ -32,21 +32,27 @@ import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 public class Operator {
 
   public static void main(String[] args) throws IOException {
-    String sql = "//用户项目\n"
-        + "@NotOnly\n"
-        + "project base-user{\n"
-        + "\tabstract AbstractEntity{\n"
-        + "\t\tid String\n"
-        + "\t\tdate LocalDate\n"
-        + "\t}\n"
-        + "\tenum Gender{\n"
-        + "\t\tMan\n"
-        + "\t\tMale\n"
-        + "\t}\n"
-        + "\tentity User extends AbstractEntity{\n"
-        + "\t\tgender String\n"
-        + "\t\tgender1 List<String>\n"
-        + "\t}\n"
+    String sql = "//水利水电造价-杠杆\n"
+        + "project heaver{\n"
+        + "  config{\n"
+        + "    basePackage:cn.yematech.heaver\n"
+        + "   projectName: heaver\n"
+        + "  }\n"
+        + "  //定额\n"
+        + "  entity Quota{\n"
+        + "    name String\n"
+        + "    code String \n"
+        + "    unit String\n"
+        + "  }\n"
+        + "  //词\n"
+        + "  entity Word{\n"
+        + "    text String \n"
+        + "  }\n"
+        + "  entity QuotaWord{\n"
+        + "    refId String \n"
+        + "    wordId String\n"
+        + "    degree BigDecimal\n"
+        + "  }  \n"
         + "}";
     ANTLRInputStream input = null;  //将输入转成antlr的input流
     input = new ANTLRInputStream(new StringReader(sql));
@@ -60,9 +66,9 @@ public class Operator {
     project.init();
     URL velocity = Operator.class.getResource("/");
     doOperator(
-        velocity.getPath() + File.separator + "velocity" + File.separator + "{application-name}",
+        velocity.getPath() + File.separator + "neo" + File.separator + "{application-name}",
 //        File.separator + "tmp" + File.separator + project.getProjectName()
-        "/Volumes/BIGGER/workspace/dsl/gen"
+        "gen"
         , project);
   }
 

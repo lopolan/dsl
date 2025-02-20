@@ -1,0 +1,12 @@
+Unit=1
+UnitSymbol=2
+SimpleUnit=3
+ComplexUnit=4
+OtherUnit=5
+LengthUnit=6
+AreaUnit=7
+VolumesUnit=8
+SizeUnit=9
+WeightUnit=10
+PowerUnit=11
+TimeUnit=12

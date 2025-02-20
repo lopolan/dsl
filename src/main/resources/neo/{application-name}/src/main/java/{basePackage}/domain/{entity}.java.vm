@@ -1,0 +1,27 @@
+package ${basePackage}.domain;
+#foreach($name in $entity.allFieldFullNames)
+import $name;
+#end
+
+public class $entity.className #if($entity.parent) extends $entity.parent  #else extends AbstractAuditingEntity #end{
+#foreach($field in $entity.fields)
+#if($field.name == "id")
+    @TableId
+#else
+    @TableField(name="${$field.lineName}")
+#end
+    private $field.typeName $field.name;
+#end
+
+#foreach($field in $entity.fields)
+
+    public  ${entity.className} set${field.className}(${field.typeName} ${field.name}) {
+        this.${field.name}=${field.name};
+        return this;
+    }
+    public  ${field.typeName} get${field.className}() {
+        return this.${field.name};
+    }
+#end
+
+}

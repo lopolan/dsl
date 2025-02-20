@@ -10,7 +10,7 @@ package cn.yematech.dsl.domain;
  * @author lopo
  * @date 2021/12/9 10:45 上午
  **/
-public class Field extends Content{
+public class Field extends Content implements Comparable<Field>{
   private String name;
   private String value;
 
@@ -35,5 +35,10 @@ public class Field extends Content{
   public Field setValue(String value) {
     this.value = value;
     return this;
+  }
+
+  @Override
+  public int compareTo(Field o) {
+    return getName().compareTo(o.getName()) | getValue().compareTo(o.getValue());
   }
 }

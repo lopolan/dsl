@@ -1,4 +1,4 @@
-package cn.yematech.dsl.g4;// Generated from /Volumes/BIGGER/workspace/dsl/src/main/resources/DSL.g4 by ANTLR 4.9.2
+package cn.yematech.dsl.g4;// Generated from /Users/lopo/bigger/workspace/dsl/src/main/resources/DSL.g4 by ANTLR 4.9.2
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**

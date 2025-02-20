@@ -1,0 +1,14 @@
+package ${basePackage}.api.dto;
+import com.baomidou.mybatisplus.annotation.EnumValue;
+
+public enum $enum.className{
+
+#foreach($name in $enum.fields)
+    $name,
+#end
+    @EnumValue
+    @Override
+    public String toString() {
+        return name();
+    }
+}

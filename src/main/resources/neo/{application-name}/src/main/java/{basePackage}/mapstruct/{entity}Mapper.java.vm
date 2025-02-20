@@ -1,0 +1,26 @@
+package ${basePackage}.mapstruct;
+
+
+import ${basePackage}.domain.${entity.className};
+import ${basePackage}.api.dto.${entity.className}DTO;
+import org.mapstruct.IterableMapping;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.Named;
+
+import java.util.List;
+import java.util.Map;
+
+@Mapper(componentModel = "spring")
+public interface ${entity.className}Mapping {
+    @Named("toDo")
+    ${entity.className} toDo(${entity.className}DTO dto);
+    @Named("toDto")
+    ${entity.className}DTO toDto(${entity.className} domain);
+
+    @IterableMapping(qualifiedByName ="toDto")
+    List<${entity.className}DTO> toDtos(List<${entity.className}> domains);
+
+    @IterableMapping(qualifiedByName ="toDo")
+    List<${entity.className}> toDo(List<${entity.className}DTO> dto);
+}

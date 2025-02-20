@@ -1,0 +1,93 @@
+package ${basePackage}.api.dto;
+
+import ${basePackage}.api.filter.*;
+
+#foreach($name in $entity.allEffectiveFieldFullNames)
+import $name;
+#end
+
+public class ${entity.className}Criteria implements Serializable{
+    private static final long serialVersionUID = 1L;
+      private StringFilter id;
+      private StringFilter createdBy;
+      private StringFilter createdById;
+      private LocalDateTimeFilter createdDate;
+      private StringFilter lastModifiedBy;
+      private StringFilter lastModifiedById;
+      private LocalDateTimeFilter lastModifiedDate;
+      public StringFilter getId() {
+        return id;
+      }
+
+      public ${entity.className}Criteria setId(StringFilter id) {
+        this.id = id;
+        return this;
+      }
+
+      public StringFilter getCreatedBy() {
+        return createdBy;
+      }
+
+      public ${entity.className}Criteria setCreatedBy(StringFilter createdBy) {
+        this.createdBy = createdBy;
+        return this;
+      }
+
+      public StringFilter getCreatedById() {
+        return createdById;
+      }
+
+      public ${entity.className}Criteria setCreatedById(StringFilter createdById) {
+        this.createdById = createdById;
+        return this;
+      }
+
+      public LocalDateTimeFilter getCreatedDate() {
+        return createdDate;
+      }
+
+      public ${entity.className}Criteria setCreatedDate(LocalDateTimeFilter createdDate) {
+        this.createdDate = createdDate;
+        return this;
+      }
+
+      public StringFilter getLastModifiedBy() {
+        return lastModifiedBy;
+      }
+
+      public ${entity.className}Criteria setLastModifiedBy(StringFilter lastModifiedBy) {
+        this.lastModifiedBy = lastModifiedBy;
+        return this;
+      }
+
+      public StringFilter getLastModifiedById() {
+        return lastModifiedById;
+      }
+
+      public ${entity.className}Criteria setLastModifiedById(StringFilter lastModifiedById) {
+        this.lastModifiedById = lastModifiedById;
+        return this;
+      }
+
+      public LocalDateTimeFilter getLastModifiedDate() {
+        return lastModifiedDate;
+      }
+
+      public ${entity.className}Criteria setLastModifiedDate(LocalDateTimeFilter lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
+        return this;
+      }
+
+#foreach($field in $entity.allEffectiveField)
+    #if($field.fieldTypeEnums)
+  private $field.fieldTypeEnums.filter $field.name;
+    public ${entity.className}Criteria set${field.className}(${field.fieldTypeEnums.filter} ${field.name}) {
+        this.${field.name}=${field.name};
+        return this;
+    }
+    public ${field.fieldTypeEnums.filter} get${field.className}() {
+        return this.${field.name};
+    }
+    #end
+#end
+}

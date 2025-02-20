@@ -2,7 +2,7 @@
 基于 antlr4 和velocity 
 ### 模版可定制 @see resource/velocity
 ### 词法语法如下
-···
+<pre>
 root: project;
 project: remark? (annotation)* 'project' projectName '{' (entity|dto|enums|config)* '}'  EOF;
 entity: remark? (annotation)* 'entity' entityName ('extends' fieldName)? '{' (field)* '}';
@@ -30,4 +30,4 @@ TEXT: ([a-zA-Z0-9]|[\u4e00-\u9fa5]|'_'|'.'|'-')+ ;
 NAME: ([a-zA-Z0-9]|'_'|'-')+ { if(1==-1){setType(TEXT);}};
 STR: '\'' ('\'\'' | ~('\''))* '\'';
 WS: [ \t\n\r]+ -> skip ;
-···
+</pre>
